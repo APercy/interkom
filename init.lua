@@ -14,7 +14,7 @@ interkom.serverselect = {}
 interkom.reconnect = false
 
 local path = minetest.get_modpath(minetest.get_current_modname())
-local wpath = minetest.get_worldpath().."/Lilly"
+local wpath = minetest.get_worldpath().."/interkom"
 local timer = 0
 local ctime = interkom.intervall or 5
 local blwait = interkom.blacklist or 60
@@ -223,20 +223,20 @@ end)
 function interkom.send_stuff(name,pname,sname,message)
 	
 	    if pname and sname and message then
-	      local supported = true
+        local supported = true
 	      
-		  -- check for unusual stacksizes
-		  local stack = ItemStack(message)
-		  local tool = false
-	          local sendpriv = minetest.get_player_privs(name)
-                  local max = stack:get_stack_max()
-                  if stack:get_stack_max() == 1 then tool = true end
+        -- check for unusual stacksizes
+        local stack = ItemStack(message)
+        local tool = false
+        local sendpriv = minetest.get_player_privs(name)
+        local max = stack:get_stack_max()
+        if stack:get_stack_max() == 1 then tool = true end
 
-                  if sendpriv.lessismore and name ~= pname then max = 5 end
-		  if stack:get_count() > max then
-		      stack:set_count(max)
-		      message = stack:to_string()
-		  end
+        --if sendpriv.lessismore and name ~= pname then max = 5 end
+        if stack:get_count() > max then
+            stack:set_count(max)
+            message = stack:to_string()
+        end
 		  
 		  --check valid stacknames
 		if stack:get_name() == "" then supported = false end
